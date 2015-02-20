@@ -20,7 +20,7 @@ class BRDF
 public:
   virtual RGBColor f(const ShadeRec& sr, const Vector3D& w_i, const Vector3D& w_o)  = 0;
   virtual RGBColor sampleF(const ShadeRec& sr, Vector3D& w_i, const Vector3D& w_o)  = 0;
-  virtual RGBColor rho(const ShadeRec& sr, const Vector3D& w_i, const Vector3D& w_o)  = 0;
+  virtual RGBColor rho(const ShadeRec& sr, const Vector3D& w_o)  = 0;
 
   BRDF ();
   virtual ~BRDF ();

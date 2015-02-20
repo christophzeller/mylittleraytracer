@@ -4,6 +4,7 @@
 #include "../Utility/RGBColor.h"
 #include "../Tracing/Ray.h"
 #include "../Tracing/ShadeRec.h"
+#include "../Materials/Material.h"
 
 //class Ray;
 //class ShadeRec;
@@ -19,8 +20,12 @@ public:
   inline const RGBColor& getColor() { return color; };
   inline void setColor(const RGBColor& newColor) { color = newColor; }
 
+  inline void setMaterial(Material* newMaterial) { material = newMaterial; }
+  inline Material* getMaterial() { return material; }
+
 protected:
   RGBColor color;
+  Material* material;
 };
 
 #endif

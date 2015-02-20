@@ -17,6 +17,18 @@ RGBColor PointLight::L(ShadeRec& sr)
   return (color * l_scale);
 }
 
+PointLight::PointLight(const Point3D& location, const RGBColor& color)
+  : Light(), color(color), l_scale(1.0), location(location)
+{
+
+}
+
+PointLight::PointLight(const Point3D& location)
+  : Light(), color(1, 1, 1), l_scale(1.0), location(location)
+{
+
+}
+
 PointLight::PointLight ()
   : Light(), color(1, 1, 1), l_scale(1.0)
 {

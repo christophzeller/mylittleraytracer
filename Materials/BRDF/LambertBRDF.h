@@ -19,13 +19,13 @@ class LambertBRDF : public BRDF
 public:
   virtual RGBColor f(const ShadeRec& sr, const Vector3D& w_i, const Vector3D& w_o) ;
   virtual RGBColor sampleF(const ShadeRec& sr, Vector3D& w_i, const Vector3D& w_o) ;
-  virtual RGBColor rho(const ShadeRec& sr, const Vector3D& w_i, const Vector3D& w_o) ;
+  virtual RGBColor rho(const ShadeRec& sr, const Vector3D& w_o) ;
 
   LambertBRDF ();
   virtual
   ~LambertBRDF ();
 
-private:
+//private:
   float k_diffuse;
   RGBColor c_diffuse;
 };

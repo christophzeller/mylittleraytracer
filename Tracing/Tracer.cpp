@@ -6,8 +6,19 @@
  */
 
 #include "Tracer.h"
+#include "World.h"
 
 RGBColor Tracer::traceRay(const Ray& ray) const
+{
+	return RGBColor(0, 0, 0);
+}
+
+RGBColor Tracer::traceRay(const Ray& ray, const int recursionDepth) const
+{
+	return RGBColor(0, 0, 0);
+}
+
+RGBColor Tracer::traceRay(const Ray& ray, const int recursionDepth, float& tMin) const
 {
 	return RGBColor(0, 0, 0);
 }

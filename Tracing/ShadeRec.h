@@ -5,6 +5,7 @@
 #include "../Utility/Normal.h"
 #include "../Utility/Point3D.h"
 #include "../Tracing/Ray.h"
+#include "../Materials/Material.h"
 //#include "World.h"
 
 class World;
@@ -25,7 +26,7 @@ public:
 
   double t; // ?
 
-  //Material* material;
+  Material* material;
 
   ShadeRec(World& wr);
 //  ShadeRec(const ShadeRec& other);

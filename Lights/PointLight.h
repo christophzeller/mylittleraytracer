@@ -20,6 +20,8 @@ public:
   virtual Vector3D getDirection(ShadeRec& sr);
   virtual RGBColor L(ShadeRec& sr);
 
+  PointLight(const Point3D& location, const RGBColor& color);
+  PointLight(const Point3D& location);
   PointLight ();
   virtual
   ~PointLight ();

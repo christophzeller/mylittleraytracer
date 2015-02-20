@@ -9,7 +9,8 @@
 #define ORTHOGRAPHICCAMERA_H_
 
 #include "Camera.h"
-#include "../Tracing/World.h"
+class World;
+//#include "../Tracing/World.h"
 
 class OrthographicCamera : public Camera
 {

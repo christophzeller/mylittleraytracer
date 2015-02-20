@@ -9,9 +9,10 @@
 #define __TRACER
 
 #include "../Utility/RGBColor.h"
+//#include "World.h"
+class World;
 
 class Ray;
-class World;
 
 class Tracer
 {
@@ -19,6 +20,8 @@ public:
 	Tracer();
 	Tracer(World* world);
 	virtual RGBColor traceRay(const Ray& ray) const;
+	virtual RGBColor traceRay(const Ray& ray, const int recursionDepth) const;
+	virtual RGBColor traceRay(const Ray& ray, const int recursionDepth, float& tMin) const;
 	virtual ~Tracer();
 
 protected:

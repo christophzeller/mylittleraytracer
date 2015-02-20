@@ -11,6 +11,7 @@
 #include "../Utility/Point3D.h"
 #include "../Utility/Vector3D.h"
 #include "../Utility/ViewPlane.h"
+#include "../Tracing/Tracer.h"
 //#include "../Tracing/World.h"
 
 class World;

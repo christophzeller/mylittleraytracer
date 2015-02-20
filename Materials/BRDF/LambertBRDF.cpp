@@ -18,7 +18,7 @@ RGBColor LambertBRDF::sampleF(const ShadeRec& sr, Vector3D& w_i, const Vector3D&
   return RGBColor(0, 0, 0);
 }
 
-RGBColor LambertBRDF::rho(const ShadeRec& sr, const Vector3D& w_i, const Vector3D& w_o)
+RGBColor LambertBRDF::rho(const ShadeRec& sr, const Vector3D& w_o)
 {
   return (c_diffuse * k_diffuse);
 }

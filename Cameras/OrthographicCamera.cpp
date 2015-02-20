@@ -6,6 +6,10 @@
  */
 
 #include "OrthographicCamera.h"
+#include "../Tracing/World.h"
+#include "../Tracing/Ray.h"
+
+#include <fstream>
 
 void OrthographicCamera::renderScene(World& w)
 {
@@ -17,9 +21,9 @@ void OrthographicCamera::renderScene(World& w)
 
   ray.direction = Vector3D(0,0,-1);
 
-//  std::ofstream outputFile;
-//  outputFile.open("output.ppm", std::ios_base::out | std::ios_base::trunc );
-//  outputFile << "P3\n" << vp.hRes << " " << vp.vRes << "\n255 \n";
+  std::ofstream outputFile;
+  outputFile.open("shaded.ppm", std::ios_base::out | std::ios_base::trunc );
+  outputFile << "P3\n" << vp.hRes << " " << vp.vRes << "\n255 \n";
 
   for (int i = 0; i < vp.vRes; i++) // rows
   {
@@ -32,15 +36,17 @@ void OrthographicCamera::renderScene(World& w)
 		  pixelColor = w.tracer->traceRay(ray);
 		  //paintPixel(i, j, pixelColor);
 
-//		  outputFile << pixelColor << " ";
+		  outputFile << pixelColor << " ";
 	  }
-//	  outputFile << "\n";
+	  outputFile << "\n";
   }
-  std::cout << "finished" << std::endl;
+
   //std::cout << "hits: " << hitCount << std::endl << "pixels: " << vp.vRes * vp.hRes;
 
-//  outputFile.flush();
-//  outputFile.close();
+  outputFile.flush();
+  outputFile.close();
+
+  std::cout << "finished" << std::endl;
 }
 
 OrthographicCamera::OrthographicCamera ()

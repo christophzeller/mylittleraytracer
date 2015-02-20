@@ -42,6 +42,14 @@ RGBColor& RGBColor::operator=(const RGBColor& other)
   return *this;
 }
 
+RGBColor& RGBColor::operator+=(const RGBColor& other)
+{
+  r += other.r;
+  g += other.g;
+  b += other.b;
+  return *this;
+}
+
 RGBColor::~RGBColor(void)
 {
 }
