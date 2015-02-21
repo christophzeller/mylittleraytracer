@@ -8,6 +8,7 @@ GeometricObject::GeometricObject(void)
 
 GeometricObject::~GeometricObject(void)
 {
-	if (material)
-		delete material;
+	// TODO: causes illegal memory access error/exception. why?
+//	if (material)
+//		delete material;
 }

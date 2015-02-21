@@ -7,12 +7,12 @@
 
 #include "ViewPlane.h"
 
-ViewPlane::ViewPlane() {
-	// TODO Auto-generated constructor stub
-
+ViewPlane::ViewPlane()
+  : hRes(1), vRes(1), pixelSize(1.0), gamma(1.0), invGamma(1.0), numSamples(1)
+{
 }
 
-ViewPlane::~ViewPlane() {
-	// TODO Auto-generated destructor stub
+ViewPlane::~ViewPlane()
+{
 }
 

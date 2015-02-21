@@ -8,6 +8,8 @@
 #include "Camera.h"
 #include "math.h"
 
+#include <iostream>
+
 const double Camera::kPi = 3.14159265;
 const double Camera::kPiInv = 1.0 / 3.14159265;
 
@@ -31,6 +33,7 @@ Camera::Camera()
 
 Camera::~Camera()
 {
+	std::cout << "deleting rendertarget" << std::endl;
 	if (renderTarget)
 		delete renderTarget;
 }

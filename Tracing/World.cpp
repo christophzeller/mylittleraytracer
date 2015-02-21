@@ -12,21 +12,6 @@
 
 #include "../Cameras/RenderTargets/PPMASCIITarget.h"
 
-//void World::build()
-//{
-//	vp.setGamma(1.0);
-//	vp.setPixelSize(1.0);
-//	vp.setHRes(200);
-//	vp.setVRes(200);
-//
-//	backgroundColor = RGBColor(0.0, 0.0, 0.0);
-//
-//	sphere.setRadius(85.0);
-//	sphere.setCenter(Point3D(0.0, 0.0, 0.0));
-//
-//	tracer = new SingleSphereTracer(this);
-//}
-
 const double World::kHugeValue = 9999999.9;
 
 void World::build()
@@ -35,13 +20,14 @@ void World::build()
 	vp.setPixelSize(0.5);
 	vp.setHRes(400);
 	vp.setVRes(400);
+	vp.setSamples(32);
 
-	backgroundColor = RGBColor(0.0, 0.0, 0.0);
+	backgroundColor = RGBColor(0.1, 0.1, 0.3);
 
 	tracer = new RayCastingTracer(this);
 
-	RGBColor yellow(1, 1, 0);										// yellow
-	RGBColor light_purple(0.65, 0.3, 1.0);							// light purple
+	RGBColor yellow(1, 1, 0);
+	RGBColor light_purple(0.65, 0.3, 1.0);
 	RGBColor lightGrey(0.3, 0.3, 0.3);
 	RGBColor darkGrey(0.7, 0.7, 0.7);
 	RGBColor turqoise(0.0, 0.4, 0.7);
@@ -49,7 +35,6 @@ void World::build()
 	RGBColor darkPurple(0.5, 0.3, 0.0);
 
 	Sphere*	sphere_ptr1 = new Sphere(Point3D(5, 3, 0), 30);
-	sphere_ptr1->setColor(yellow);
 
 	Matte* matteYellow = new Matte();
 	matteYellow->setC_d(yellow);
@@ -58,7 +43,6 @@ void World::build()
 	sphere_ptr1->setMaterial(matteYellow);
 
 	Sphere*	sphere_ptr2 = new Sphere(Point3D(45, -7, -60), 20);
-	sphere_ptr2->setColor(light_purple);
 
 	Matte* mattePurple = new Matte();
 	mattePurple->setC_d(light_purple);
@@ -86,13 +70,13 @@ void World::build()
 	matteDarkPurple->setK_a(0.25);
 	matteDarkPurple->setK_d(0.60);
 
-	Sphere* s3 = new Sphere(Point3D(-45, 0, -40), 30);
+	Sphere* s3 = new Sphere(Point3D(-45, -15, -40), 30);
 	s3->setMaterial(matteLightGrey);
 
 	Sphere* s4 = new Sphere(Point3D(-15, 45, -75), 20);
 	s4->setMaterial(matteTurqoise);
 
-	Sphere* s5 = new Sphere(Point3D(-15, -35, 0), 25);
+	Sphere* s5 = new Sphere(Point3D(-35, -35, 30), 25);
 	s5->setMaterial(matteDarkGrey);
 
 	Sphere* s6 = new Sphere(Point3D(35, 25, 15), 10);
@@ -107,7 +91,7 @@ void World::build()
 
 	camera = new OrthographicCamera();
 //	const char* f = "render.ppm";
-	camera->setRenderTarget(new PPMASCIITarget(vp, "test.ppm"));
+	camera->setRenderTarget(new PPMASCIITarget(vp, "AAtest.ppm"));
 
 	ambientLight = new AmbientLight();
 
@@ -178,20 +162,23 @@ World::~World(void)
 {
     if (tracer)
     {
-	std::cout << "deleting tracer " << std::endl;
-	delete tracer;
+		std::cout << "deleting tracer " << std::endl;
+		delete tracer;
+		std::cout << "deleted" << std::endl;
     }
 
     if (camera)
     {
-	std::cout << "deleting camera " << std::endl;
-	delete camera;
+		std::cout << "deleting camera " << std::endl;
+		delete camera;
+		std::cout << "deleted" << std::endl;
     }
 
     if (ambientLight)
     {
-	std::cout << "deleting ambient light " << std::endl;
-	delete ambientLight;
+		std::cout << "deleting ambient light " << std::endl;
+		delete ambientLight;
+		std::cout << "deleted" << std::endl;
     }
 
     for (unsigned int i = 0; i < objects.size(); i++)
@@ -206,5 +193,7 @@ World::~World(void)
 	  std::cout << "deleting light " << i << "..." << std::endl;
 	  delete lights[i];
 	}
+    std::cout << "clearing lights array..." << std::endl;
 	lights.clear();
+	std::cout << "cleared" << std::endl;
 }
