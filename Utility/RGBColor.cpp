@@ -50,6 +50,14 @@ RGBColor& RGBColor::operator+=(const RGBColor& other)
   return *this;
 }
 
+RGBColor& RGBColor::operator/=(const float other)
+{
+  r /= other;
+  g /= other;
+  b /= other;
+  return *this;
+}
+
 RGBColor::~RGBColor(void)
 {
 }

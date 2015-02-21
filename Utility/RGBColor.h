@@ -15,12 +15,17 @@ public:
 
   RGBColor& operator=(const RGBColor& other);
   RGBColor& operator+=(const RGBColor& other);
+  RGBColor& operator/=(const float other);
 
   bool operator==(const RGBColor& other) const;
 
   RGBColor(double r, double g, double b);
   RGBColor(void);
   ~RGBColor(void);
+
+  inline double getR() const { return r; }
+  inline double getG() const { return g; }
+  inline double getB() const { return b; }
 
   //friend RGBColor operator*(const float lhs, const RGBColor& rhs);
   friend std::ostream& operator<<(std::ostream& os, const RGBColor& c);

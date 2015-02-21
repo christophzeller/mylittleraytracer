@@ -12,7 +12,7 @@
 #include "../Utility/Vector3D.h"
 #include "../Utility/ViewPlane.h"
 #include "../Tracing/Tracer.h"
-//#include "../Tracing/World.h"
+#include "RenderTargets/RenderTarget.h"
 
 class World;
 
@@ -23,6 +23,8 @@ public:
   Camera();
   virtual ~Camera();
 
+  inline void setRenderTarget(RenderTarget* t) { renderTarget = t; }
+
   virtual void renderScene(World& w) = 0;
   void computeOrthoNormalBasis();
 
@@ -31,6 +33,7 @@ protected:
   Vector3D up;
 
   Vector3D u, v, w;
+  RenderTarget* renderTarget;
 
   static const double kPi;
   static const double kPiInv;

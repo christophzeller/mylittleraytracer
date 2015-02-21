@@ -31,5 +31,7 @@ Camera::Camera()
 
 Camera::~Camera()
 {
+	if (renderTarget)
+		delete renderTarget;
 }
 

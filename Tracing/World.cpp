@@ -10,6 +10,8 @@
 #include "../Lights/PointLight.h"
 #include "../Lights/DirectionalLight.h"
 
+#include "../Cameras/RenderTargets/PPMASCIITarget.h"
+
 //void World::build()
 //{
 //	vp.setGamma(1.0);
@@ -40,6 +42,11 @@ void World::build()
 
 	RGBColor yellow(1, 1, 0);										// yellow
 	RGBColor light_purple(0.65, 0.3, 1.0);							// light purple
+	RGBColor lightGrey(0.3, 0.3, 0.3);
+	RGBColor darkGrey(0.7, 0.7, 0.7);
+	RGBColor turqoise(0.0, 0.4, 0.7);
+	RGBColor blue(0.0, 1.0, 0.0);
+	RGBColor darkPurple(0.5, 0.3, 0.0);
 
 	Sphere*	sphere_ptr1 = new Sphere(Point3D(5, 3, 0), 30);
 	sphere_ptr1->setColor(yellow);
@@ -59,13 +66,52 @@ void World::build()
 	mattePurple->setK_d(0.60);
 	sphere_ptr2->setMaterial(mattePurple);
 
+	Matte* matteLightGrey = new Matte();
+	matteLightGrey->setC_d(lightGrey);
+	matteLightGrey->setK_a(0.1);
+	matteLightGrey->setK_d(0.7);
+
+	Matte* matteDarkGrey = new Matte();
+	matteDarkGrey->setC_d(darkGrey);
+	matteDarkGrey->setK_a(0.1);
+	matteDarkGrey->setK_d(0.7);
+
+	Matte* matteTurqoise = new Matte();
+	matteTurqoise->setC_d(turqoise);
+	matteTurqoise->setK_a(0.1);
+	matteTurqoise->setK_d(0.7);
+
+	Matte* matteDarkPurple = new Matte();
+	matteDarkPurple->setC_d(light_purple);
+	matteDarkPurple->setK_a(0.25);
+	matteDarkPurple->setK_d(0.60);
+
+	Sphere* s3 = new Sphere(Point3D(-45, 0, -40), 30);
+	s3->setMaterial(matteLightGrey);
+
+	Sphere* s4 = new Sphere(Point3D(-15, 45, -75), 20);
+	s4->setMaterial(matteTurqoise);
+
+	Sphere* s5 = new Sphere(Point3D(-15, -35, 0), 25);
+	s5->setMaterial(matteDarkGrey);
+
+	Sphere* s6 = new Sphere(Point3D(35, 25, 15), 10);
+	s6->setMaterial(matteDarkPurple);
+
 	objects.push_back(sphere_ptr1);
 	objects.push_back(sphere_ptr2);
+	objects.push_back(s3);
+	objects.push_back(s4);
+	objects.push_back(s5);
+	objects.push_back(s6);
 
 	camera = new OrthographicCamera();
+//	const char* f = "render.ppm";
+	camera->setRenderTarget(new PPMASCIITarget(vp, "test.ppm"));
+
 	ambientLight = new AmbientLight();
 
-	PointLight* pointLight = new PointLight(Point3D(-15, -50, 0));
+	PointLight* pointLight = new PointLight(Point3D(0, 0, 0), RGBColor(0.0, 0.1, 0.5));
 	lights.push_back(pointLight);
 
 	Vector3D lightDir = Vector3D(10, 75, 30);
