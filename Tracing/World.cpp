@@ -17,12 +17,12 @@ const double World::kHugeValue = 9999999.9;
 void World::build()
 {
 	vp.setGamma(1.0);
-	vp.setPixelSize(0.5);
-	vp.setHRes(400);
-	vp.setVRes(400);
+	vp.setPixelSize(0.20);
+	vp.setHRes(800);
+	vp.setVRes(800);
 	vp.setSamples(32);
 
-	backgroundColor = RGBColor(0.1, 0.1, 0.3);
+	backgroundColor = RGBColor(0.7, 0.7, 0.8);
 
 	tracer = new RayCastingTracer(this);
 
