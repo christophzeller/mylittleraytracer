@@ -7,7 +7,8 @@
 
 #include "BRDF.h"
 
-const double BRDF::kPiInv = 1.0 / 3.14159265;
+const double BRDF::kPiInv = //1.0 / 3.14159265;
+0.3183098861837906715;
 
 BRDF::BRDF ()
 {

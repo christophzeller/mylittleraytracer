@@ -7,6 +7,7 @@
 #include "RayCastingTracer.h"
 
 #include "../Materials/Matte.h"
+#include "../Materials/Phong.h"
 #include "../Lights/PointLight.h"
 #include "../Lights/DirectionalLight.h"
 
@@ -38,9 +39,18 @@ void World::build()
 
 	Matte* matteYellow = new Matte();
 	matteYellow->setC_d(yellow);
-	matteYellow->setK_a(0.25);
-	matteYellow->setK_d(0.60);
+	matteYellow->setK_a(0.1);
+	matteYellow->setK_d(0.8);
 	sphere_ptr1->setMaterial(matteYellow);
+
+	Phong* dullYellow = new Phong();
+	dullYellow->setC_d(yellow);
+	dullYellow->setK_a(0.1);
+	dullYellow->setK_d(0.8);
+
+	dullYellow->setK_s(0.1);
+	dullYellow->setSpecularExponent(1.0);
+	dullYellow->setC_s(RGBColor(0, 0, 0));
 
 	Sphere*	sphere_ptr2 = new Sphere(Point3D(45, -7, -60), 20);
 
@@ -53,12 +63,12 @@ void World::build()
 	Matte* matteLightGrey = new Matte();
 	matteLightGrey->setC_d(lightGrey);
 	matteLightGrey->setK_a(0.1);
-	matteLightGrey->setK_d(0.7);
+	matteLightGrey->setK_d(0.85);
 
 	Matte* matteDarkGrey = new Matte();
 	matteDarkGrey->setC_d(darkGrey);
 	matteDarkGrey->setK_a(0.1);
-	matteDarkGrey->setK_d(0.7);
+	matteDarkGrey->setK_d(0.9);
 
 	Matte* matteTurqoise = new Matte();
 	matteTurqoise->setC_d(turqoise);
@@ -70,14 +80,26 @@ void World::build()
 	matteDarkPurple->setK_a(0.25);
 	matteDarkPurple->setK_d(0.60);
 
+	Phong* phongYellow = new Phong();
+	phongYellow->setC_d(yellow);
+	phongYellow->setK_a(0.10);
+	phongYellow->setK_d(0.60);
+
+	phongYellow->setC_s(RGBColor(1, 1, 1));
+	phongYellow->setK_s(0.8);
+	phongYellow->setSpecularExponent(64.0);
+
+
 	Sphere* s3 = new Sphere(Point3D(-45, -15, -40), 30);
-	s3->setMaterial(matteLightGrey);
+	//s3->setMaterial(matteLightGrey);
+	s3->setMaterial(phongYellow);
 
 	Sphere* s4 = new Sphere(Point3D(-15, 45, -75), 20);
 	s4->setMaterial(matteTurqoise);
 
 	Sphere* s5 = new Sphere(Point3D(-35, -35, 30), 25);
-	s5->setMaterial(matteDarkGrey);
+	//s5->setMaterial(matteDarkGrey);
+	s5->setMaterial(dullYellow);
 
 	Sphere* s6 = new Sphere(Point3D(35, 25, 15), 10);
 	s6->setMaterial(matteDarkPurple);
@@ -91,7 +113,7 @@ void World::build()
 
 	camera = new OrthographicCamera();
 //	const char* f = "render.ppm";
-	camera->setRenderTarget(new PPMASCIITarget(vp, "AAtest.ppm"));
+	camera->setRenderTarget(new PPMASCIITarget(vp, "phongtest.ppm"));
 
 	ambientLight = new AmbientLight();
 

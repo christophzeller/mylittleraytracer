@@ -1,18 +1,17 @@
 /*
- * Matte.cpp
+ * Phong.cpp
  *
- *  Created on: 19.02.2015
+ *  Created on: 21.02.2015
  *      Author: Christoph
  */
 
-#include "Matte.h"
+#include "Phong.h"
 #include "../Tracing/ShadeRec.h"
 #include "../Tracing/World.h"
 #include "../Utility/Vector3D.h"
 
-#include <iostream>
 
-RGBColor Matte::shadeRayCast(ShadeRec& sr)
+RGBColor Phong::shadeRayCast(ShadeRec& sr)
 {
 	Vector3D w_o = - sr.r.direction;
 	RGBColor L = ambient->rho(sr, w_o) * sr.w.ambientLight->L(sr);
@@ -25,27 +24,31 @@ RGBColor Matte::shadeRayCast(ShadeRec& sr)
 
 		if (nDotw_i > 0.0)
 		{
-			L += diffuse->f(sr, w_o, w_i) * sr.w.lights[i]->L(sr) * nDotw_i;
+			L += (diffuse->f(sr, w_o, w_i) + specular->f(sr, w_o, w_i))
+					* sr.w.lights[i]->L(sr) * nDotw_i;
 		}
 	}
 
 	return L;
 }
 
-Matte::Matte()
-	: Material()//, ambient(new LambertBRDF), diffuse(new LambertBRDF)
+Phong::Phong()
+  : Material()
 {
 	ambient = new LambertBRDF();
 	diffuse = new LambertBRDF();
-
+	specular = new GlossySpecularBRDF();
 }
 
-Matte::~Matte()
+Phong::~Phong()
 {
 	if (ambient)
 		delete ambient;
 
 	if (diffuse)
 		delete diffuse;
+
+	if (specular)
+		delete specular;
 }
 

@@ -29,6 +29,7 @@ void OrthographicCamera::renderScene(World& w)
 
   for (int i = 0; i < vp.vRes; i++) // rows
   {
+	  std::cout << "processing row " << i << " of " << vp.vRes << std::endl;
 	  for (int j = 0; j < vp.hRes; j++) // columns
 	  {
 		  pixelColor = RGBColor(0, 0, 0); // initially black.
