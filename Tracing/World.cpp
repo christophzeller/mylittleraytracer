@@ -18,10 +18,10 @@ const double World::kHugeValue = 9999999.9;
 void World::build()
 {
 	vp.setGamma(1.0);
-	vp.setPixelSize(0.20);
+	vp.setPixelSize(0.22);
 	vp.setHRes(800);
-	vp.setVRes(800);
-	vp.setSamples(32);
+	vp.setVRes(200);
+	vp.setSamples(16);
 
 	backgroundColor = RGBColor(0.7, 0.7, 0.8);
 
@@ -35,13 +35,13 @@ void World::build()
 	RGBColor blue(0.0, 1.0, 0.0);
 	RGBColor darkPurple(0.5, 0.3, 0.0);
 
-	Sphere*	sphere_ptr1 = new Sphere(Point3D(5, 3, 0), 30);
+
 
 	Matte* matteYellow = new Matte();
 	matteYellow->setC_d(yellow);
 	matteYellow->setK_a(0.1);
 	matteYellow->setK_d(0.8);
-	sphere_ptr1->setMaterial(matteYellow);
+
 
 	Phong* dullYellow = new Phong();
 	dullYellow->setC_d(yellow);
@@ -52,13 +52,13 @@ void World::build()
 	dullYellow->setSpecularExponent(1.0);
 	dullYellow->setC_s(RGBColor(0, 0, 0));
 
-	Sphere*	sphere_ptr2 = new Sphere(Point3D(45, -7, -60), 20);
+
 
 	Matte* mattePurple = new Matte();
 	mattePurple->setC_d(light_purple);
 	mattePurple->setK_a(0.25);
 	mattePurple->setK_d(0.60);
-	sphere_ptr2->setMaterial(mattePurple);
+
 
 	Matte* matteLightGrey = new Matte();
 	matteLightGrey->setC_d(lightGrey);
@@ -90,30 +90,41 @@ void World::build()
 	phongYellow->setSpecularExponent(64.0);
 
 
-	Sphere* s3 = new Sphere(Point3D(-45, -15, -40), 30);
+
+	Sphere*	s1 = new Sphere(Point3D(-75, 0, 0), 10);
+	s1->setMaterial(matteYellow);
+
+	Sphere*	s2 = new Sphere(Point3D(-50, 0, 0), 10);
+	s2->setMaterial(mattePurple);
+
+	Sphere* s3 = new Sphere(Point3D(-25, 0, 0), 10);
 	//s3->setMaterial(matteLightGrey);
 	s3->setMaterial(phongYellow);
 
-	Sphere* s4 = new Sphere(Point3D(-15, 45, -75), 20);
+	Sphere* s4 = new Sphere(Point3D(0, 0, 0), 10);
 	s4->setMaterial(matteTurqoise);
 
-	Sphere* s5 = new Sphere(Point3D(-35, -35, 30), 25);
+	Sphere* s5 = new Sphere(Point3D(25, 0, 0), 10);
 	//s5->setMaterial(matteDarkGrey);
 	s5->setMaterial(dullYellow);
 
-	Sphere* s6 = new Sphere(Point3D(35, 25, 15), 10);
+	Sphere* s6 = new Sphere(Point3D(50, 0, 0), 10);
 	s6->setMaterial(matteDarkPurple);
 
-	objects.push_back(sphere_ptr1);
-	objects.push_back(sphere_ptr2);
+	Sphere* s7 = new Sphere(Point3D(75, 0, 0), 10);
+	s7->setMaterial(matteDarkPurple);
+
+	objects.push_back(s1);
+	objects.push_back(s2);
 	objects.push_back(s3);
 	objects.push_back(s4);
 	objects.push_back(s5);
 	objects.push_back(s6);
+	objects.push_back(s7);
 
 	camera = new OrthographicCamera();
 //	const char* f = "render.ppm";
-	camera->setRenderTarget(new PPMASCIITarget(vp, "phongtest.ppm"));
+	camera->setRenderTarget(new PPMASCIITarget(vp, "phongrow.ppm"));
 
 	ambientLight = new AmbientLight();
 
