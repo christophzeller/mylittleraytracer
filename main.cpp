@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 {
   World w;
   w.build();
-  //w.render();
+
   w.camera->renderScene(w);
 
   return 0;

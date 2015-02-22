@@ -21,12 +21,14 @@ public:
   Vector3D getRayDirection(const Point3D& p) const;
 
   PinholeCamera(Point3D eye, Point3D target, Vector3D up, float d, float zoom);
+  PinholeCamera(Point3D eye, Point3D target, Vector3D up, float fov);
   PinholeCamera();
   virtual ~PinholeCamera ();
 
 private:
   float d;
   float zoom;
+  float fov;
 };
 
 #endif /* PINHOLECAMERA_H_ */

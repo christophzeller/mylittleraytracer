@@ -32,6 +32,7 @@ protected:
   Point3D eye, target;
   Vector3D up;
 
+  // right, up, forward
   Vector3D u, v, w;
   RenderTarget* renderTarget;
 

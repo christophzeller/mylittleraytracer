@@ -11,16 +11,22 @@
 #include "../Lights/PointLight.h"
 #include "../Lights/DirectionalLight.h"
 
+#include "../Geometry/Primitives/Plane.h"
+
 #include "../Cameras/RenderTargets/PPMASCIITarget.h"
+#include "../Cameras/PinholeCamera.h"
 
 const double World::kHugeValue = 9999999.9;
 
 void World::build()
 {
 	vp.setGamma(1.0);
-	vp.setPixelSize(0.22);
+	vp.setPixelSize(1.0);
+
 	vp.setHRes(800);
-	vp.setVRes(200);
+	vp.setVRes(400);
+//	vp.setHRes(800);
+//	vp.setVRes(200);
 	vp.setSamples(16);
 
 	backgroundColor = RGBColor(0.7, 0.7, 0.8);
@@ -32,10 +38,18 @@ void World::build()
 	RGBColor lightGrey(0.3, 0.3, 0.3);
 	RGBColor darkGrey(0.7, 0.7, 0.7);
 	RGBColor turqoise(0.0, 0.4, 0.7);
-	RGBColor blue(0.0, 1.0, 0.0);
+	RGBColor blue(0.0, 0.0, 1.0);
 	RGBColor darkPurple(0.5, 0.3, 0.0);
 
 
+	Phong* shinyBlue = new Phong();
+	shinyBlue->setC_d(blue);
+	shinyBlue->setK_a(0.1);
+	shinyBlue->setK_d(0.8);
+
+	shinyBlue->setK_s(0.5);
+	shinyBlue->setSpecularExponent(8.0);
+	shinyBlue->setC_s(RGBColor(1, 1, 1));
 
 	Matte* matteYellow = new Matte();
 	matteYellow->setC_d(yellow);
@@ -50,7 +64,7 @@ void World::build()
 
 	dullYellow->setK_s(0.1);
 	dullYellow->setSpecularExponent(1.0);
-	dullYellow->setC_s(RGBColor(0, 0, 0));
+	dullYellow->setC_s(RGBColor(1, 1, 1));
 
 
 
@@ -91,28 +105,34 @@ void World::build()
 
 
 
-	Sphere*	s1 = new Sphere(Point3D(-75, 0, 0), 10);
+	Sphere*	s1 = new Sphere(Point3D(-15, 15, 80), 10);
 	s1->setMaterial(matteYellow);
 
-	Sphere*	s2 = new Sphere(Point3D(-50, 0, 0), 10);
+	Sphere*	s2 = new Sphere(Point3D(10, -10, 60), 10);
 	s2->setMaterial(mattePurple);
 
-	Sphere* s3 = new Sphere(Point3D(-25, 0, 0), 10);
+	Sphere* s3 = new Sphere(Point3D(-5, 5, 40), 10);
 	//s3->setMaterial(matteLightGrey);
 	s3->setMaterial(phongYellow);
 
-	Sphere* s4 = new Sphere(Point3D(0, 0, 0), 10);
+	Sphere* s4 = new Sphere(Point3D(0, 0, 20), 10);
 	s4->setMaterial(matteTurqoise);
 
-	Sphere* s5 = new Sphere(Point3D(25, 0, 0), 10);
+	Sphere* s5 = new Sphere(Point3D(5, -5, 0), 10);
 	//s5->setMaterial(matteDarkGrey);
 	s5->setMaterial(dullYellow);
 
-	Sphere* s6 = new Sphere(Point3D(50, 0, 0), 10);
+	Sphere* s6 = new Sphere(Point3D(-10, 10, -20), 10);
 	s6->setMaterial(matteDarkPurple);
 
-	Sphere* s7 = new Sphere(Point3D(75, 0, 0), 10);
-	s7->setMaterial(matteDarkPurple);
+	Sphere* s7 = new Sphere(Point3D(15, -15, -40), 10);
+	s7->setMaterial(shinyBlue);
+
+	Plane* p1 = new Plane(Point3D(0, 0, 80), Normal(0, 1, 0));
+	p1->setMaterial(shinyBlue);
+
+	Plane* p2 = new Plane(Point3D(0, 0, -80), Normal(0, 0, -1));
+	p2->setMaterial(matteLightGrey);
 
 	objects.push_back(s1);
 	objects.push_back(s2);
@@ -122,8 +142,13 @@ void World::build()
 	objects.push_back(s6);
 	objects.push_back(s7);
 
-	camera = new OrthographicCamera();
+	objects.push_back(p1);
+	//objects.push_back(p2);
+
+//	camera = new OrthographicCamera();
 //	const char* f = "render.ppm";
+
+	camera = new PinholeCamera(Point3D(0, 0, 150), Point3D(0, 0, 0), Vector3D(0, 1, 0), 50.0);
 	camera->setRenderTarget(new PPMASCIITarget(vp, "phongrow.ppm"));
 
 	ambientLight = new AmbientLight();
