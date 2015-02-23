@@ -17,7 +17,7 @@ class OrthographicCamera : public Camera
 public:
   virtual void renderScene(World& w);
 
-
+  OrthographicCamera(Point3D eye, Point3D target, Vector3D up);
   OrthographicCamera ();
   virtual ~OrthographicCamera ();
 };
