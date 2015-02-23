@@ -12,18 +12,21 @@
 #include <fstream>
 #include <math.h>
 
-void OrthographicCamera::renderScene(World& w)
+void OrthographicCamera::renderScene(World& wr)
 {
-  ViewPlane vp(w.vp);
+  ViewPlane vp(wr.vp);
   RGBColor pixelColor;
   Ray ray;
   double zw = 100.0; // hard-coded camera position along the z-axis
   //double x, y;
 
+  computeOrthoNormalBasis();
+
   int n = (int)sqrt((float)vp.getSamples());
   Point3D samplePoint = Point3D(0, 0, 0);
 
-  ray.direction = Vector3D(0,0,-1);
+  //ray.direction = Vector3D(0,0,-1);
+  ray.direction = -w;
 
   renderTarget->setUp();
 
@@ -38,15 +41,12 @@ void OrthographicCamera::renderScene(World& w)
 		  {
 			  for (int pixelX = 0; pixelX < n; pixelX++)
 			  {
-				  //samplePoint.x = vp.pixelSize * (j - 0.5 * vp.hRes + (pixelX + 0.5) / n);
-				  //samplePoint.y = vp.pixelSize * (i - 0.5 * vp.vRes + (pixelY + 0.5) / n);
-				  //ray.origin = Point3D(samplePoint.x, samplePoint.y, zw);
-
-				  double sampleX = vp.pixelSize * (j - 0.5 * vp.hRes + (pixelX + 0.5) / n);
-				  double sampleY = vp.pixelSize * (i - 0.5 * vp.vRes + (pixelY + 0.5) / n);
-
-				  ray.origin = Point3D(sampleX, sampleY, zw);
-				  pixelColor += w.tracer->traceRay(ray);
+				  Point3D o = eye
+						  + ((vp.pixelSize * (j - 0.5 * vp.hRes + (pixelX + 0.5) / n)) * (u))
+						  + ((vp.pixelSize * (i - 0.5 * vp.vRes + (pixelY + 0.5) / n)) * (v))
+						  ;
+				  ray.origin = o;
+				  pixelColor += wr.tracer->traceRay(ray);
 			  }
 		  }
 
@@ -60,7 +60,14 @@ void OrthographicCamera::renderScene(World& w)
   std::cout << "finished" << std::endl;
 }
 
+OrthographicCamera::OrthographicCamera (Point3D eye, Point3D target, Vector3D up)
+  : Camera(eye, target, up)
+{
+
+}
+
 OrthographicCamera::OrthographicCamera ()
+  : Camera(Point3D(0,0,100), Point3D(0,0,0), Vector3D(0,1,0))
 {
 }
 
